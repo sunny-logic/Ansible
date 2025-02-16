@@ -7,7 +7,15 @@
       apt:
         update_cache: yes
         upgrade: yes
-
+      register: debian
+    - name: List installed and updated packages
+      shell: grep -E "^$(date +%Y-%m-%d).+ (install|upgrade) " /var/log/dpkg.log |cut -d " " -f 3-5
+      register: result
+      when: debian.changed
+    - name: Show Output
+      debug: msg="{{ result.stdout_lines }}"
+      when: debian.changed
+      
 #    - name: Perform a dist-upgrade.
 #      ansible.builtin.apt:
 #        upgrade: dist
