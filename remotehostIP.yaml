@@ -1,6 +1,6 @@
 ---
   - name: Shell Examples
-    hosts: web_servers
+    hosts: all_vms
     become: true
     tasks:
     - name: Print hostname -I info
