@@ -1,0 +1,5 @@
+- name: Docker Container Status in Ansible
+  hosts: "{{hostnames}}"
+  tasks:
+    - name: Docker Container Status in Ansible
+      command: docker ps -a
