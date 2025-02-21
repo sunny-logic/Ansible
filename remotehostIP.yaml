@@ -1,6 +1,6 @@
 ---
-  - name: Shell Examples
-    hosts: "{{hosts}}"
+  - name: Print hostname
+    hosts: "{{hostnames}}"
     become: true
     tasks:
     - name: Print hostname -I info
