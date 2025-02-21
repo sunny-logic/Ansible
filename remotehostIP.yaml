@@ -1,6 +1,6 @@
 ---
   - name: Shell Examples
-    hosts: all_vms
+    hosts: {{hosts}}
     become: true
     tasks:
     - name: Print hostname -I info
