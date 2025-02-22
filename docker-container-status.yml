@@ -2,17 +2,17 @@
   hosts: "{{hostnames}}"
   tasks:
     - name: List all Docker containers
-      command: docker ps -a
+      command: docker ps -a --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"
       register: docker_containers
     - debug:
         var: docker_containers.stdout_lines
 
-    - name: Start Docker Compose services
-      command: docker-compose up -d
+    #- name: Start Docker Compose services
+      #command: docker-compose up -d
       #args:
         #chdir: /path/to/your/docker-compose-dir
 
-    - name: Stop Docker Compose services
-      command: docker-compose down
+    #- name: Stop Docker Compose services
+      #command: docker-compose down
       #args:
         #chdir: /path/to/your/docker-compose-dir
