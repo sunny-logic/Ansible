@@ -1,4 +1,6 @@
 - name: Docker Container Status in Ansible
+  become: true
+  become_method: sudo
   hosts: "{{hostnames}}"
   tasks:
     - name: List all Docker containers
