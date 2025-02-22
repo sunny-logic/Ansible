@@ -16,7 +16,7 @@
 
     - name: Pause for 5 minutes to build app cache
       ansible.builtin.pause:
-      minutes: 1
+        minutes: 1
 
     - name: List all Docker containers
       #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
