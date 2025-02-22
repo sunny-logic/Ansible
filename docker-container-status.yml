@@ -10,10 +10,28 @@
     - debug:
         var: docker_containers.stdout_lines
 
-    - name: Start Docker Compose services
+    - name: Stop Docker Compose services
       command: /usr/bin/docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile ondemand --profile logmon --profile nextcloud --profile vpn down --remove-orphans
       tags: destroy
 
-    - name: Stop Docker Compose services
+    - name: Pause for 5 minutes to build app cache
+      ansible.builtin.pause:
+      minutes: 1
+
+    - name: List all Docker containers
+      #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
+      command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
+      register: docker_containers
+    - debug:
+        var: docker_containers.stdout_lines
+
+    - name: Start Docker Compose services
       command: /usr/bin/docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile ondemand --profile logmon --profile nextcloud --profile vpn up -d --force-recreate --remove-orphans
       tags: create
+
+    - name: List all Docker containers
+      #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
+      command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
+      register: docker_containers
+    - debug:
+        var: docker_containers.stdout_lines
