@@ -9,6 +9,6 @@
         pre_reboot_delay: 70
         msg: "Rebooting machine in 70 seconds"
     - name: Check the Uptime of the servers
-        shell: "uptime"
+        shell: uptime
         register: Uptime
-      - debug: var=Uptime
+    - debug: msg={{Uptime.stdout}}
