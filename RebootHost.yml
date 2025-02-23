@@ -1,4 +1,5 @@
 ---
+  #https://docs.ansible.com/ansible/latest/collections/ansible/builtin/reboot_module.html#examples
   - name: Reboot host and send a message
     hosts: "{{hostnames}}"
     become: true
@@ -6,5 +7,7 @@
     - name: Delay Reboot by 1m, Reboot machine and send a message
       ansible.builtin.reboot:
         pre_reboot_delay: 70
-        test_command: whoami
         msg: "Rebooting machine in 70 seconds"
+    - name: Command to run on the rebooted host and expect success from to determine the machine is ready.
+      ansible.builtin.reboot:
+        test_command: whoami
