@@ -3,6 +3,8 @@
     hosts: "{{hostnames}}"
     become: true
     tasks:
-    - name: Reboot machine and send a message
+    - name: Delay Reboot by 1m, Reboot machine and send a message
       ansible.builtin.reboot:
-        msg: "Rebooting machine in 5 seconds"
+        pre_reboot_delay: 70
+        test_command: whoami
+        msg: "Rebooting machine in 70 seconds"
