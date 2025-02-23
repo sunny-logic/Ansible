@@ -11,3 +11,6 @@
     - name: Command to run on the rebooted host and expect success from to determine the machine is ready.
       ansible.builtin.reboot:
         test_command: whoami
+      register: test_command_op
+      #tags: hostnameIP
+    - debug: msg="{{test_command_op.stdout}}"
