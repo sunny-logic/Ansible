@@ -8,7 +8,10 @@
       ansible.builtin.reboot:
         pre_reboot_delay: 70
         msg: "Rebooting machine in 70 seconds"
-    - name: Check the Uptime of the servers
-        shell: uptime
-        register: Uptime
-    - debug: msg={{Uptime.stdout}}
+
+    - name: Check the Uptime of the host
+      shell:
+         "uptime"
+      register: Uptime
+      #tags: hostnameIP
+    - debug: msg="{{Uptime.stdout}}"
