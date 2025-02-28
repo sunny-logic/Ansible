@@ -1,6 +1,6 @@
 ---
   - name: Update and upgrade apt packages and Remove dependencies that are no longer required.
-    hosts: {{hostnames}}
+    hosts: "{{hostnames}}"
     become: true
     tasks:
     - name: Update and upgrade apt packages
