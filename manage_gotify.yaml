@@ -1,7 +1,7 @@
 ---
   - name: Run Gotify
     hosts: "{{hostnames}}"
-    #become: true
+    become: true
     tasks:
     - name: Run manage_gotify
       shell:
