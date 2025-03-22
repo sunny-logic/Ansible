@@ -5,4 +5,4 @@
     tasks:
     - name: Stop/start semaphore
       shell:
-         "sudo service semaphore stop && sleep 10 && sudo service semaphore status && sleep 10 && sudo service semaphore stop && sleep 10 && sudo systemctl daemon-reload"
+         "sudo service semaphore stop && sleep 10 && sudo service semaphore status && sleep 10 && sudo service semaphore start && service semaphore status && sleep 10 && sudo systemctl daemon-reload && sudo service semaphore status"
