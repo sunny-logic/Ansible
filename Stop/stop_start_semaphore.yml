@@ -1,8 +1,0 @@
----
-  - name: Stop/start semaphore
-    hosts: "{{hostnames}}"
-    become: true
-    tasks:
-    - name: Stop/start semaphore
-      shell:
-         "sudo service semaphore stop && sleep 10 && sudo service semaphore status && sleep 10 && sudo service semaphore stop && sleep 10 && sudo systemctl daemon-reload"
