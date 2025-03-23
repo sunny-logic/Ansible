@@ -42,4 +42,4 @@
       when:
         - root_facts.results | length > 0
         - root_space_info.size_available is defined
-        - root_space_info.size_available < 5*1024**3
+        - root_space_info.size_available < 20*1024**3
