@@ -7,7 +7,7 @@
       command: sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove
 
     - name: Docker prune volumes
-      command: /usr/bin/docker system prune --volumes
+      command: /usr/bin/docker volume prune -f
 
     #- name: Docker prune system
     #  command: /usr/bin/docker system prune -a
