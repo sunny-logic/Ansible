@@ -1,25 +1,45 @@
+#- name: Storage
+#  hosts: "{{hostnames}}"
+#  become: yes
+#  #become_method: sudo
+#  tasks:
+#    - name: Check Storage freespace
+#      shell: sudo df | grep /dev/mapper/ubuntu--vg-ubuntu--lv | awk '{print $5}';
+#      register: freespace
+#
+#    - name: Print the output of the shell command
+#      debug:
+#         var: freespace.stdout
+#
+#    - fail:
+#            msg: '"{{ tmp_freespace.stdout }}" value'
+#      when: freespace.stdout|float is gt 40
+#
+#    - name: Remove
+#      shell: rm /tmp/*.txt;
+#      register: ls_output
+#
+#    - name: Print the output of the shell command
+#      debug:
+#         var: ls_output.stdout
 ---
-- name: Storage
+- name: Check disk space and show a warning if free space is low
   hosts: "{{hostnames}}"
   become: yes
-  #become_method: sudo
+  gather_facts: true
   tasks:
-    - name: Check Storage freespace
-      shell: sudo df | grep /dev/mapper/ubuntu--vg-ubuntu--lv | awk '{print $5}';
-      register: freespace
-
-    - name: Print the output of the shell command
+    - name: Gather disk space facts
+      ansible.builtin.setup:
+    - name: Get disk space information for "/"
+      set_fact:
+        root_space_info: "{{ item }}"
+      loop: "{{ ansible_mounts }}"
+      when: item.mount == '/'
+      register: root_facts
+    - name: Show warning message if free disk space is low on "/"
       debug:
-         var: freespace.stdout
-
-    - fail:
-            msg: '"{{ tmp_freespace.stdout }}" value'
-      when: freespace.stdout|float is gt 40
-
-    - name: Remove
-      shell: rm /tmp/*.txt;
-      register: ls_output
-
-    - name: Print the output of the shell command
-      debug:
-         var: ls_output.stdout
+        msg: "WARNING: Free disk space on / is low ({{ (root_space_info.size_available / 1024**3) | round(2) }} GB remaining)"
+      when:
+        - root_facts.results | length > 0
+        - root_space_info.size_available is defined
+        - root_space_info.size_available < 5*1024**3
