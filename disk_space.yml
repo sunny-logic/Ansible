@@ -14,7 +14,7 @@
 
     - fail:
             msg: '"{{ tmp_freespace.stdout }}" value'
-      when: freespace.stdout|float is gt 50
+      when: freespace.stdout|float is gt 40
 
     - name: Remove
       shell: rm /tmp/*.txt;
