@@ -1,0 +1,25 @@
+---
+- name: Storage
+  hosts: "{{hostnames}}"
+  become: yes
+  #become_method: sudo
+  tasks:
+    - name: Check Storage freespace
+      shell: sudo df | grep /dev/mapper/ubuntu--vg-ubuntu--lv | awk '{print $5}';
+      register: freespace
+
+    - name: Print the output of the shell command
+      debug:
+         var: freespace.stdout
+
+    - fail:
+            msg: '"{{ tmp_freespace.stdout }}" value'
+      when: freespace.stdout|float is gt 50
+
+    - name: Remove
+      shell: rm /tmp/*.txt;
+      register: ls_output
+
+    - name: Print the output of the shell command
+      debug:
+         var: ls_output.stdout
