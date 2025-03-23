@@ -1,0 +1,19 @@
+- name: Disk Cleanup
+  become: true
+  become_method: sudo
+  hosts: "{{hostnames}}"
+  tasks:
+    - name: Clear APT cache
+      command: sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove
+
+    - name: Docker prune volumes
+      command: /usr/bin/docker system prune --volumes
+
+    #- name: Docker prune system
+    #  command: /usr/bin/docker system prune -a
+    
+    #- name: Start Docker Compose services
+    #  command: /usr/bin/docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile ondemand --profile logmon --profile nextcloud --profile vpn up -d --force-recreate --remove-orphans
+    
+    #- name: List all Docker containers
+    #  command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
