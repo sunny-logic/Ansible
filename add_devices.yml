@@ -4,7 +4,7 @@
     become: true
     tasks:
     - name: mount
-      shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ files:scan --all"
+      shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'ls -ltrh /usr/local/bin/ff*'"
       register: occ_files_scan_result
     - debug:
         var: occ_files_scan_result.stdout_lines    
