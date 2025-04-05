@@ -3,24 +3,10 @@
     hosts: "{{hostnames}}"
     become: true
     tasks:
-    - name: mount
-      shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'ls -ltrh /usr/local/bin/ff*'"
-      register: occ_files_scan_result
+    - name: Verify device was mounted
+      shell: "ls -ltrh {{device}}"
+      register: list_result
     - debug:
-        var: occ_files_scan_result.stdout_lines    
-      tags:
-      - setup
-    - name: Copy ffmpeg is installed inside the container
-      shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'cp /usr/bin/ffmpeg /usr/local/bin/ffmpeg && cp /usr/bin/ffprobe /usr/local/bin/ffprobe && cp /usr/bin/ffplay /usr/local/bin/ffplay'"
-      register: copy_ffmpeg_result
-    - debug:
-        var: copy_ffmpeg_result.stdout_lines    
-      tags:
-      - setup
-    - name: Verify ffmpeg is installed inside the container
-      shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'ls -ltrh /usr/bin/ff*'"
-      register: list_ffmpeg_result
-    - debug:
-        var: list_ffmpeg_result.stdout_lines
+        var: list_result.stdout_lines
       tags:
       - verify
