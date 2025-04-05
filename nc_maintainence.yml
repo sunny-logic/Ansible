@@ -27,7 +27,7 @@
     - debug:
         var: copy_ffmpeg_result.stdout_lines    
     - name: Verify ffmpeg is installed inside the container
-      shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'ls -lrth /usr/local/bin/ff*'"
+      shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'cp /usr/bin/ffmpeg /usr/local/bin/ffmpeg && cp /usr/bin/ffprobe /usr/local/bin/ffprobe && cp /usr/bin/ffplay /usr/local/bin/ffplay'"
       register: list_ffmpeg_result
     - debug:
         var: list_ffmpeg_result.stdout_lines
