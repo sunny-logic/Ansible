@@ -8,5 +8,12 @@
       register: list_result
     - debug:
         var: list_result.stdout_lines
+      tags:
+      - verify
+    - name: Dont Verify device was mounted
+      shell: "ls -ltrh {{device}}"
+      register: 1list_result
+    - debug:
+        var: 1list_result.stdout_lines
       #tags:
-      #- verify
+      - dontverify
