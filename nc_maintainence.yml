@@ -5,12 +5,12 @@
     tasks:
     - name: OCC Files Scan
       shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ files:scan --all"
-    - name: OCC files scan-app-data
-      shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ files:scan-app-data"
-    - name: OCC preview pre-generate
-      shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ preview:pre-generate"
-    - name: OCC preview generate all size
-      shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ preview:generate-all"
+    #- name: OCC files scan-app-data
+      #shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ files:scan-app-data"
+    #- name: OCC preview pre-generate
+      #shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ preview:pre-generate"
+    #- name: OCC preview generate all size
+      #shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ preview:generate-all"
     - name: OCC Memories Indexing
       shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ memories:index -f"
     - name: Install ffmpeg inside the container
