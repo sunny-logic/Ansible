@@ -8,5 +8,5 @@
       register: list_result
     - debug:
         var: list_result.stdout_lines
-      tags:
-      - verify
+      #tags:
+      #- verify
