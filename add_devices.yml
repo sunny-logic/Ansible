@@ -2,6 +2,7 @@
   - name: 
     hosts: "{{hostnames}}"
     become: true
+    gather_facts: true
     tasks:
     - name: Verify device was mounted
       shell: "ls -ltrh {{device}}"
