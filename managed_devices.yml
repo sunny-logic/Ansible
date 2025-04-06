@@ -13,6 +13,15 @@
         var: mount_result.stdout_lines
       tags:
       - mount
+    - name: Verify if device is mounted
+      shell: "ls -ltrh {{device}}"
+      register: mount_list_files_result
+      tags:
+      - mount_list
+    - debug:
+        var: mount_list_files_result.stdout_lines
+      tags:
+      - mount_list
     - name: unmount a device
       shell: "umount {{device}}"
       register: unmount_result
@@ -22,3 +31,12 @@
         var: unmount_result.stdout_lines
       tags:
       - unmount
+    - name: Verify if device is mounted
+      shell: "ls -ltrh {{device}}"
+      register: umount_list_files_result
+      tags:
+      - umount_list
+    - debug:
+        var: umount_list_files_result.stdout_lines
+      tags:
+      - umount_list
