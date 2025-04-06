@@ -6,9 +6,9 @@
     tasks:
     - name: Verify device was mounted
       shell: "ls -ltrh {{device}}"
-      register: list_result
-    - debug:
-        var: list_result.stdout_lines
+      #register: list_result
+    #- debug:
+        #var: list_result.stdout_lines
         #msg: "{{ list_result.stdout_lines }}"
       tags:
       - verify
