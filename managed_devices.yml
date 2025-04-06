@@ -1,0 +1,22 @@
+---
+  - name: 
+    hosts: "{{hostnames}}"
+    become: true
+    gather_facts: true
+    tasks:
+    - name: mount a device
+      shell: "mount {{device}}"
+      #register: mount_result
+    #- debug:
+        #var: mount_result.stdout_lines
+        #msg: "{{ list_result.stdout_lines }}"
+      tags:
+      - mount
+    - name: unmount a device
+      shell: "umount {{device}}"
+      #register: unmount_result
+    #- debug:
+        #var: unmount_result.stdout_lines
+        #msg: "{{ list_result.stdout_lines }}"
+      tags:
+      - unmount
