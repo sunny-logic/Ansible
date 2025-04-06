@@ -8,8 +8,8 @@
       shell: "ls -ltrh {{device}}"
       register: list_result
     - debug:
-        #var: list_result.stdout_lines
-        msg: "{{ list_result.stdout_lines }}"
+        var: list_result.stdout_lines
+        #msg: "{{ list_result.stdout_lines }}"
       tags:
       - verify
     - name: Dont Verify device was mounted
