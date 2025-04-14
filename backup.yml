@@ -22,7 +22,7 @@
       tags:
       - backup
     - name: Forget backup
-      shell: "sudo -u restic /home/restic/bin/restic --password-file /home/restic/.config/rclone/.secret.env -r rclone:mega_remote:Backups/proxtu forget --keep-within-daily 7d --keep-within-weekly 1m --keep-within-monthly 1y --keep-within-yearly 75y"
+      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} forget {{extra_arg}}"
       register: forget_result
       tags:
       - forget
