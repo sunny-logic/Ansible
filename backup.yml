@@ -4,7 +4,7 @@
     become: true
     tasks:
     - name: Backup Stats
-      shell: "sudo -u restic /home/restic/bin/restic --password-file /home/restic/.config/rclone/.secret.env -r {{repo}} stats"
+      shell: "sudo -u {{backup_user}} {{backup_bin}} --password-file {{backup_pw}} -r {{repo}} stats"
       register: stats_result
       tags:
       - stats
