@@ -4,7 +4,7 @@
     become: true
     tasks:
     - name: Backup Stats
-      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} stats"
+      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} stats {{extra_arg}}"
       register: stats_result
       tags:
       - stats
@@ -13,7 +13,7 @@
       tags:
       - stats
     - name: Backup
-      shell: "sudo -u {{backup_user}} {{backup_bin}} {{backup_pw}} -r {{repo}} backup {{folder1}} {{folder2}}"
+      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} backup {{folder1}} {{folder2}} {{extra_arg}}"
       register: backup_result
       tags:
       - backup
