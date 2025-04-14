@@ -31,7 +31,7 @@
       tags:
       - forget
     - name: Prune backup
-      shell: "sudo -u restic /home/restic/bin/restic --password-file /home/restic/.config/rclone/.secret.env -r rclone:mega_remote:Backups/proxtu prune"
+      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} prune {{extra_arg}}"
       register: prune_result
       tags:
       - prune
