@@ -28,15 +28,17 @@
       shell: "sudo /usr/bin/docker exec --user www-data nextcloud_app /usr/local/bin/php /var/www/html/occ memories:index -f"
       tags:
       - memories_index
+      async: 3600
+      poll: 0
     - name: Install ffmpeg inside the container
       shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'apt update && apt -y install ffmpeg'"
       register: install_ffmpeg_result
       tags:
       - default
-    - debug:
-        var: install_ffmpeg_result.stdout_lines    
-      tags:
-      - default
+    #- debug:
+        #var: install_ffmpeg_result.stdout_lines    
+      #tags:
+      #- default
     - name: Copy ffmpeg is installed inside the container
       shell: "sudo /usr/bin/docker exec --user root nextcloud_app bash -c 'cp /usr/bin/ffmpeg /usr/local/bin/ffmpeg && cp /usr/bin/ffprobe /usr/local/bin/ffprobe && cp /usr/bin/ffplay /usr/local/bin/ffplay'"
       register: copy_ffmpeg_result
