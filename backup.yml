@@ -39,3 +39,12 @@
         var: prune_result.stdout_lines    
       tags:
       - prune
+    - name: About backup
+      shell: "sudo rclone about {{repo}}:"
+      register: about_result
+      tags:
+      - about
+    - debug:
+        var: about_result.stdout_lines    
+      tags:
+      - about
