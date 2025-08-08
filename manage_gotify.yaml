@@ -5,4 +5,5 @@
     tasks:
     - name: Run manage_gotify
       shell:
-         "/bin/python3 /data/scripts/python/manage_gotify/manage_gotify.py"
+         "{{python_bin}} {{manage_gotify_script}}"
+         #"/bin/python3 /data/scripts/python/manage_gotify/manage_gotify.py"
