@@ -1,7 +1,0 @@
-- name: Unmount Disk
-  become: true
-  become_method: sudo
-  hosts: "{{hostnames}}"
-  tasks:
-    - name: Unmount
-      command: sudo umount -a
