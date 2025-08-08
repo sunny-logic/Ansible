@@ -11,6 +11,6 @@
       - container_status
     #- debug:
     #    var: docker_containers.stdout_lines
-    - debug: msg="{{ docker_containers.stdout }}"
-    - debug: msg="{{ docker_containers.stderr }}"
+    #- debug: var=out.stdout_lines
+    #- debug: msg="{{ docker_containers.stderr }}"
 
