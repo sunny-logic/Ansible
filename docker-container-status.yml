@@ -8,7 +8,7 @@
       command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
       register: docker_containers
     - debug:
-        var: docker_containers.stdout_lines
+        var: docker_containers
     #  tags:
     #  - container_status
     #- debug:
