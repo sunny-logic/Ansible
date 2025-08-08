@@ -10,6 +10,7 @@
       tags: list_containers
     - debug:
         var: docker_containers.stdout_lines
+      tags: list_containers
 
     - name: Stop Docker Compose services
       command: /usr/bin/docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile ondemand --profile logmon --profile nextcloud --profile vpn down --remove-orphans
@@ -26,6 +27,7 @@
       tags: list_containers
     - debug:
         var: docker_containers.stdout_lines
+      tags: list_containers
 
     - name: Start Docker Compose services
       command: /usr/bin/docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile ondemand --profile logmon --profile nextcloud --profile vpn up -d --force-recreate --remove-orphans
@@ -39,3 +41,5 @@
       - list_running_containers
     - debug:
         var: docker_containers.stdout_lines
+      tags:
+      - list_running_containers
