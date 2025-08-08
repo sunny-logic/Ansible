@@ -35,6 +35,7 @@
       #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
       command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
       register: docker_containers
-      tags: list_running_containers
+      tags:
+      - list_running_containers
     - debug:
         var: docker_containers.stdout_lines
