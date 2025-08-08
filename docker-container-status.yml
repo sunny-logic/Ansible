@@ -9,6 +9,8 @@
       register: docker_containers
     - debug:
         var: docker_containers.stdout_lines
+    tags:
+       - always
     #  tags:
     #  - container_status
     #- debug:
