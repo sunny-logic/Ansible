@@ -13,10 +13,13 @@
         var: docker_containers.stdout_lines    
       tags:
       - always
-    #  tags:
-    #  - container_status
-    #- debug:
-    #    var: docker_containers.stdout_lines
-    #- debug: var=out.stdout_lines
-    #- debug: msg="{{ docker_containers.stderr }}"
-
+    - name: List all Docker containers 2
+      #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
+      command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
+      register: docker_containers2
+      tags:
+      - always2
+    - debug:
+        var: docker_containers2.stdout_lines    
+      tags:
+      - always2
