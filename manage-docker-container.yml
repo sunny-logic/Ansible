@@ -1,0 +1,45 @@
+- name: Docker Container Status in Ansible
+  become: true
+  become_method: sudo
+  hosts: "{{hostnames}}"
+  tasks:
+    - name: List all Docker containers
+      #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
+      command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
+      register: docker_containers
+      tags: list_containers
+    - debug:
+        var: docker_containers.stdout_lines
+      tags: list_containers
+
+    - name: Stop Docker Compose services
+      command: /usr/bin/docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile ondemand --profile logmon --profile nextcloud --profile vpn down --remove-orphans
+      tags: stop_containers
+
+    - name: Pause for 5 minutes to build app cache
+      ansible.builtin.pause:
+        minutes: 1
+
+    - name: List all Docker containers
+      #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
+      command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
+      register: docker_containers
+      tags: list_containers
+    - debug:
+        var: docker_containers.stdout_lines
+      tags: list_containers
+
+    - name: Start Docker Compose services
+      command: /usr/bin/docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile ondemand --profile logmon --profile nextcloud --profile vpn up -d --force-recreate --remove-orphans
+      tags: start_containers
+
+    - name: List all Docker containers
+      #command: docker ps -a --format "table {{.Names}}\t{{.Status}}"
+      command: /usr/bin/docker ps -a --format "table {{ '{{' }} .Names {{ '}}' }}\t{{ '{{' }} .Status {{ '}}' }}"
+      register: docker_containers
+      tags:
+      - list_running_containers
+    - debug:
+        var: docker_containers.stdout_lines
+      tags:
+      - list_running_containers
