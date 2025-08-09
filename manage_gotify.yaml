@@ -5,4 +5,4 @@
     tasks:
     - name: Run manage_gotify
       shell:
-         "{{python_bin}} {{manage_gotify_script}}" "1"
+         "{{python_bin}}" "{{manage_gotify_script}}" "{{action_type}} {{threshold}}"
