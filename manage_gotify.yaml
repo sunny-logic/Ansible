@@ -10,6 +10,6 @@
       tags:
       - default
     - debug:
-        var: script.stdout_lines
+        var: script_result.stdout_lines
       tags:
       - default
