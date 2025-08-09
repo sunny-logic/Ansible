@@ -5,6 +5,18 @@
     tasks:
     - name: Stop/start semaphore
       shell:
-         "sudo service semaphore restart && sleep 10 && sudo systemctl daemon-reload"
+         "{{semaphore_service}} {{action_type}} && sleep 10 && {{daemon-reload}}"
       async: 3600
       poll: 0
+      tags:
+      - semaphore_restart
+    - name: semaphore status
+      shell:
+         "{{semaphore_service}} {{action_type}}" 
+      register: status_result
+      tags:
+      - semaphore_status
+    - debug:
+        var: status_result.stdout_lines
+      tags:
+      - semaphore_status
