@@ -6,3 +6,10 @@
     - name: Run manage_gotify
       shell:
          "{{python_bin}} {{manage_gotify_script}} {{action_type}} {{threshold}}"
+      register: script_result
+      tags:
+      - default
+    - debug:
+        var: script.stdout_lines
+      tags:
+      - default
