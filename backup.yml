@@ -48,3 +48,33 @@
         var: about_result.stdout_lines    
       tags:
       - about
+
+    - name: cache cleanup
+      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} cache --cleanup"
+      register: cleanup_result
+      tags:
+      - cache_cleanup
+    - debug:
+        var: cleanup_result.stdout_lines    
+      tags:
+      - cache_cleanup
+
+    - name: repair snapshots
+      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} repair snapshots --forget"
+      register: repair_snapshots_result
+      tags:
+      - repair_snapshots
+    - debug:
+        var: repair_snapshots_result.stdout_lines    
+      tags:
+      - repair_snapshots
+
+    - name: repair index
+      shell: "sudo {{backup_user}} {{backup_bin}} {{backup_pw}} {{repo}} repair index"
+      register: repair_index_result
+      tags:
+      - repair_index
+    - debug:
+        var: repair_index_result.stdout_lines    
+      tags:
+      - repair_index
