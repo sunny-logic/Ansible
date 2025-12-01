@@ -50,9 +50,9 @@
       ansible.builtin.apt:
         clean: yes
   
-    - name: restart docker
-      service: 
-         name: docker 
-         state: restarted 
-         enabled: yes
-      when: ansible_distribution == 'Ubuntu'
+#    - name: restart docker
+#      service: 
+#         name: docker 
+#         state: restarted 
+#         enabled: yes
+#      when: ansible_distribution == 'Ubuntu'
