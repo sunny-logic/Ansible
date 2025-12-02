@@ -61,7 +61,7 @@
       become: True
       shell:
         cmd: "docker compose -f {{compose-file}} {{compose-props}} {{compose-options}}"
-        chdir: {{compose-path}}
+        chdir: "{{compose-path}}"
 
     - name: Pause for 3 minutes for containers to start-up
       ansible.builtin.pause:
