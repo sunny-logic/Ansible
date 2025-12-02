@@ -57,8 +57,12 @@
 #         enabled: yes
 #      when: ansible_distribution == 'Ubuntu'
 
-    - name: Run container
+    - name: Restart containers
       become: True
       shell:
-        cmd: "docker compose -f /data/docker-compose/docker-compose.yml --env-file /data/docker-compose/.secrets.env --profile frontend --profile logmon --profile nextcloud --profile vpn up -d --force-recreate --remove-orphans"
-        chdir: /data/docker-compose/
+        cmd: "docker compose -f {{compose-file}} {{compose-props}} {{compose-options}}"
+        chdir: {{compose-path}}
+
+   - name: Pause for 3 minutes for containers to start-up
+     ansible.builtin.pause:
+        minutes: 3
