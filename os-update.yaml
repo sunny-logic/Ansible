@@ -60,7 +60,7 @@
     - name: Restart containers
       become: True
       shell:
-        cmd: "/usr/bin/docker/docker compose -f {{compose-file}} {{compose-props}} {{compose-options}}"
+        cmd: "/usr/bin/docker compose -f {{compose-file}} {{compose-props}} {{compose-options}}"
         chdir: "{{compose-path}}"
 
     - name: Pause for 3 minutes for containers to start-up
