@@ -57,6 +57,12 @@
 #         enabled: yes
 #      when: ansible_distribution == 'Ubuntu'
 
+    - name: Restart Docker if hostname is kubuntu
+      ansible.builtin.service:
+        name: docker
+        state: restarted
+      when: ansible_hostname == {{docker_host}}
+
 # https://docs.ansible.com/projects/ansible/latest/collections/community/docker/docker_compose_v2_module.html
 #    - name: Restart containers
 #      become: True
