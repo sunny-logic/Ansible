@@ -61,7 +61,7 @@
       ansible.builtin.service:
         name: docker
         state: restarted
-      when: ansible_hostname == {{docker_host}}
+      when: ansible_hostname == docker_host
 
 # https://docs.ansible.com/projects/ansible/latest/collections/community/docker/docker_compose_v2_module.html
 #    - name: Restart containers
