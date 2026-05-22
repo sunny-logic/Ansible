@@ -67,7 +67,7 @@
     - name: Restart containers
       become: True
       shell:
-        cmd: "/usr/bin/docker compose -f {{compose-file}} {{compose-props}} {{compose-options}}"
+        cmd: "{{compose-bin}} {{compose-file}} {{compose-props}} {{compose-options}}"
         chdir: "{{compose-path}}"
       when: ansible_hostname == docker_host
 
