@@ -77,7 +77,7 @@
 
     - name: Pause for 3 minutes for containers to start-up
       ansible.builtin.pause:
-        minutes: 3
+        minutes: "{{ pause_minutes }}"
       when:
         - ansible_hostname == docker_host
         #- debian.changed
