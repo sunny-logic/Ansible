@@ -69,7 +69,9 @@
       shell:
         cmd: "{{compose_bin}} {{compose_file}} {{compose_props}} {{compose_options}}"
         chdir: "{{compose_path}}"
-      when: ansible_hostname == docker_host
+      when: 
+        -ansible_hostname == docker_host
+        - debian.changed
       register: restart_result
 
 
@@ -78,4 +80,5 @@
         minutes: 3
       when:
         - ansible_hostname == docker_host
+        - debian.changed
         - restart_result is succeeded
