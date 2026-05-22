@@ -71,14 +71,14 @@
         chdir: "{{compose_path}}"
       when: 
         - ansible_hostname == docker_host
-        #- debian.changed
+        - debian.changed
       register: restart_result
 
 
-    - name: Pause for 3 minutes for containers to start-up
+    - name: Pause for configured number of minutes for containers to start-up
       ansible.builtin.pause:
         minutes: "{{ pause_minutes }}"
       when:
         - ansible_hostname == docker_host
-        #- debian.changed
+        - debian.changed
         - restart_result is succeeded
