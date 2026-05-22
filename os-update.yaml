@@ -70,6 +70,8 @@
         cmd: "{{compose_bin}} {{compose_file}} {{compose_props}} {{compose_options}}"
         chdir: "{{compose_path}}"
       when: ansible_hostname == docker_host
+      register: restart_result
+
 
     - name: Pause for 3 minutes for containers to start-up
       ansible.builtin.pause:
