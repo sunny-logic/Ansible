@@ -67,8 +67,8 @@
     - name: Restart containers
       become: True
       shell:
-        cmd: "{{compose-bin}} {{compose-file}} {{compose-props}} {{compose-options}}"
-        chdir: "{{compose-path}}"
+        cmd: "{{compose_bin}} {{compose_file}} {{compose_props}} {{compose_options}}"
+        chdir: "{{compose_path}}"
       when: ansible_hostname == docker_host
 
     - name: Pause for 3 minutes for containers to start-up
