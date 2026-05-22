@@ -74,3 +74,6 @@
     - name: Pause for 3 minutes for containers to start-up
       ansible.builtin.pause:
         minutes: 3
+        when:
+          - ansible_hostname == docker_host
+          - restart_result is succeeded
