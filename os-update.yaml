@@ -69,7 +69,7 @@
       shell:
         cmd: "/usr/bin/docker compose -f {{compose-file}} {{compose-props}} {{compose-options}}"
         chdir: "{{compose-path}}"
-      when: ansible_hostname == {{docker_host}}
+      when: ansible_hostname == docker_host
 
     - name: Pause for 3 minutes for containers to start-up
       ansible.builtin.pause:
