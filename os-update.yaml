@@ -49,19 +49,6 @@
     - name: Run the equivalent of "apt-get clean" as a separate step
       ansible.builtin.apt:
         clean: yes
-  
-#    - name: restart docker
-#      service: 
-#         name: docker 
-#         state: restarted 
-#         enabled: yes
-#      when: ansible_distribution == 'Ubuntu'
-
-#    - name: Restart Docker if hostname is kubuntu
-#      ansible.builtin.service:
-#        name: docker
-#        state: restarted
-#      when: ansible_hostname == docker_host
 
 #https://docs.ansible.com/projects/ansible/latest/collections/community/docker/docker_compose_v2_module.html
     - name: Restart containers
@@ -70,7 +57,7 @@
         cmd: "{{compose_bin}} {{compose_file}} {{compose_props}} {{compose_options}}"
         chdir: "{{compose_path}}"
       when: 
-        - ansible_hostname == {{docker_host}}
+        - ansible_hostname == docker_host
         - debian.changed
       register: restart_result
 
@@ -79,13 +66,15 @@
       ansible.builtin.pause:
         minutes: "{{ pause_minutes }}"
       when:
-        - ansible_hostname == {{docker_host}}
+        - ansible_hostname == docker_host
         - debian.changed
         - restart_result is succeeded
 
-# Verify rclone and MEGA status on specific host
+# Verify backup status on specific host
     - name: Verify rclone and MEGA status on specific host
-      when: inventory_hostname == docker_host
+      when: 
+        - target_host is defined
+        - inventory_hostname == backup_host
       block:
         - name: Check that rclone is using the correct local path
           ansible.builtin.command: which rclone
@@ -93,11 +82,11 @@
           changed_when: false
           failed_when: rclone_path_check.stdout != "/usr/local/bin/rclone"
 
-        - name: Run rclone about to verify MEGA connection
+        - name: Run rclone about to verify backup target connection
           ansible.builtin.command: "rclone about mega_remote:"
           register: rclone_about_check
           changed_when: false
 
-        - name: Display MEGA storage information
+        - name: Display backup target storage information
           ansible.builtin.debug:
             msg: "{{ rclone_about_check.stdout_lines }}"
