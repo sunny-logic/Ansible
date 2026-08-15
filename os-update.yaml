@@ -81,6 +81,12 @@
           changed_when: false
           failed_when: rclone_path_check.stdout != "/usr/local/bin/rclone"
 
+        - name: Run backup selfupdate to pull latest official binary
+          ansible.builtin.command: rclone selfupdate
+          register: rclone_selfupdate_result
+          # rclone selfupdate returns changed if it actually upgrades the binary
+          changed_when: "'Successfully updated' in rclone_selfupdate_result.stdout"
+
         - name: Run rclone about to verify target connection
           ansible.builtin.command: "rclone about mega_remote:"
           register: rclone_about_check
