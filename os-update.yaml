@@ -94,7 +94,7 @@
           failed_when: rclone_path_check.stdout != "/usr/local/bin/rclone"
 
         - name: Run rclone about to verify MEGA connection
-          ansible.builtin.command: rclone about mega_remote:
+          ansible.builtin.command: "rclone about mega_remote:"
           register: rclone_about_check
           changed_when: false
 
