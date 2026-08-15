@@ -51,30 +51,37 @@
         clean: yes
 
 #https://docs.ansible.com/projects/ansible/latest/collections/community/docker/docker_compose_v2_module.html
+    - name: Debug inventory hostname
+      ansible.builtin.debug:
+        msg: "Current inventory_hostname is: {{inventory_hostname}}"
+
     - name: Restart containers
       become: True
       shell:
         cmd: "{{compose_bin}} {{compose_file}} {{compose_props}} {{compose_options}}"
         chdir: "{{compose_path}}"
       when: 
-        - ansible_hostname == docker_host
+        - ansible_hostname == "{{docker_host}}"
         - debian.changed
       register: restart_result
-
 
     - name: Pause for configured number of minutes for containers to start-up
       ansible.builtin.pause:
         minutes: "{{ pause_minutes }}"
       when:
-        - ansible_hostname == docker_host
+        - ansible_hostname == "{{docker_host}}"
         - debian.changed
         - restart_result is succeeded
 
 # Verify backup status on specific host
+    - name: Debug inventory hostname
+      ansible.builtin.debug:
+        msg: "Current inventory_hostname is: {{inventory_hostname}}" 
+
     - name: Verify rclone and MEGA status on specific host
       when: 
         - target_host is defined
-        - inventory_hostname == backup_host
+        - inventory_hostname == "{{backup_host}}"
       block:
         - name: Check that rclone is using the correct local path
           ansible.builtin.command: which rclone
