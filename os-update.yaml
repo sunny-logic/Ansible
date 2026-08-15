@@ -82,3 +82,22 @@
         - ansible_hostname == docker_host
         - debian.changed
         - restart_result is succeeded
+
+# Verify rclone and MEGA status on specific host
+    - name: Verify rclone and MEGA status on specific host
+      when: inventory_hostname == docker_host
+      block:
+        - name: Check that rclone is using the correct local path
+          ansible.builtin.command: which rclone
+          register: rclone_path_check
+          changed_when: false
+          failed_when: rclone_path_check.stdout != "/usr/local/bin/rclone"
+
+        - name: Run rclone about to verify MEGA connection
+          ansible.builtin.command: rclone about mega_remote:
+          register: rclone_about_check
+          changed_when: false
+
+        - name: Display MEGA storage information
+          ansible.builtin.debug:
+            msg: "{{ rclone_about_check.stdout_lines }}"
