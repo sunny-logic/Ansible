@@ -70,7 +70,7 @@
         cmd: "{{compose_bin}} {{compose_file}} {{compose_props}} {{compose_options}}"
         chdir: "{{compose_path}}"
       when: 
-        - ansible_hostname == docker_host
+        - ansible_hostname == {{docker_host}}
         - debian.changed
       register: restart_result
 
@@ -79,7 +79,7 @@
       ansible.builtin.pause:
         minutes: "{{ pause_minutes }}"
       when:
-        - ansible_hostname == docker_host
+        - ansible_hostname == {{docker_host}}
         - debian.changed
         - restart_result is succeeded
 
