@@ -18,11 +18,6 @@
       debug: msg="{{ result.stdout_lines }}"
       when: debian.changed
       
-#    - name: Perform a dist-upgrade.
-#      ansible.builtin.apt:
-#        upgrade: dist
-#        update_cache: yes
-
     - name: Check if a reboot is required.
       ansible.builtin.stat:
         path: /var/run/reboot-required
@@ -73,24 +68,23 @@
         - debian.changed
         - restart_result is succeeded
 
-# Verify backup status on specific host
-    - name: Verify rclone and MEGA status on specific host
+    - name: Verify backup status on a specific group
       when: 
-        - docker_host is defined
-        - ansible_hostname == docker_host
-        #- inventory_hostname == "{{backup_host}}"
+        - backup_group is defined
+        - backup_group in groups
+        - inventory_hostname in groups[backup_group]
       block:
-        - name: Check that rclone is using the correct local path
+        - name: Check that backup is using the correct local path
           ansible.builtin.command: which rclone
           register: rclone_path_check
           changed_when: false
           failed_when: rclone_path_check.stdout != "/usr/local/bin/rclone"
 
-        - name: Run rclone about to verify backup target connection
+        - name: Run rclone about to verify target connection
           ansible.builtin.command: "rclone about mega_remote:"
           register: rclone_about_check
           changed_when: false
 
-        - name: Display backup target storage information
+        - name: Display target storage information
           ansible.builtin.debug:
             msg: "{{ rclone_about_check.stdout_lines }}"
