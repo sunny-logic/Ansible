@@ -70,6 +70,7 @@
 
     - name: Verify backup status on a specific group
       when: 
+        - debian.changed
         - backup_group is defined
         - backup_group in groups
         - inventory_hostname in groups[backup_group]
